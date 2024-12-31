@@ -9,6 +9,14 @@ repository = "https://github.com/redScorpes/RustPasswordGenerator"
 keywords = ["cli", "utility", "clap"]
 categories = ["command-line-utilities"]
 readme = "README.md"
+exclude = [
+    ".cargo_vcs_info.json",
+    ".gitignore",
+    ".idea/*",
+    "Cargo.toml.orig",
+    "target/*",
+    "*.log",
+]
 
 [dependencies]
 clap = { version = "4.5.23", features = ["derive"] }
