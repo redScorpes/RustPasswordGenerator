@@ -41,13 +41,34 @@ fn password_generator(length: u8, special: bool, uppercase: bool, number: bool, 
     let number_range = 48..58;     // 0-9
     let special_range = "!\"#$%&'()*+,-./"; // Special characters
 
+    let mut char_types = Vec::new();
+    if args.all || args.lowercase {
+        char_types.push(0);
+    }
+    if args.all || args.uppercase {
+        char_types.push(1);
+    }
+    if args.all || args.number {
+        char_types.push(2);
+    }
+    if args.all || special {
+        char_types.push(3);
+    }
+
+    if char_types.is_empty() {
+        char_types.push(0);
+    }
+
     for i in 0..length {
-        let char = match rng.gen_range(0..4) {
-            0 if args.all || args.lowercase => rng.gen_range(lowercase_range.clone()),
-            1 if args.all || args.uppercase => rng.gen_range(uppercase_range.clone()),
-            2 if args.all || args.number => rng.gen_range(number_range.clone()),
-            3 if args.all || special => *special_range.as_bytes().choose(&mut rng).unwrap(),
-            _ => rng.gen_range(lowercase_range.clone()), // Default to lowercase if none selected
+        if char_types.is_empty() {
+            break;
+        }
+        let char = match char_types[rng.gen_range(0..char_types.len())] {
+            0 => rng.gen_range(lowercase_range.clone()),
+            1 => rng.gen_range(uppercase_range.clone()),
+            2 => rng.gen_range(number_range.clone()),
+            3 => *special_range.as_bytes().choose(&mut rng).unwrap(),
+            _ => unreachable!(),
         } as u8 as char;
         password.push(char);
         if segment_length > 0 && (i + 1) % segment_length as u8 == 0 && i < length - 1 {
