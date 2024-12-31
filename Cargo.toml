@@ -2,6 +2,13 @@
 name = "PasswordGenerator"
 version = "0.1.0"
 edition = "2021"
+authors = ["redScorpe"]
+description = "CLI password generator which uses argument parsing with clap"
+license-file = "LICENSE"
+repository = "https://github.com/redScorpes/RustPasswordGenerator"
+keywords = ["cli", "utility", "clap"]
+categories = ["command-line-utilities"]
+readme = "README.md"
 
 [dependencies]
 clap = { version = "4.5.23", features = ["derive"] }
